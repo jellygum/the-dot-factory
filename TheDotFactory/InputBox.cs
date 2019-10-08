@@ -72,14 +72,14 @@ namespace TheDotFactory
             // 
             // lblPrompt
             // 
-            this.lblPrompt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPrompt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPrompt.BackColor = System.Drawing.SystemColors.Control;
             this.lblPrompt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrompt.Location = new System.Drawing.Point(12, 9);
+            this.lblPrompt.Location = new System.Drawing.Point(14, 10);
             this.lblPrompt.Name = "lblPrompt";
-            this.lblPrompt.Size = new System.Drawing.Size(302, 20);
+            this.lblPrompt.Size = new System.Drawing.Size(283, 14);
             this.lblPrompt.TabIndex = 3;
             // 
             // btnOK
@@ -88,9 +88,9 @@ namespace TheDotFactory
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnOK.Image = ((System.Drawing.Image)(resources.GetObject("btnOK.Image")));
             this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOK.Location = new System.Drawing.Point(305, 61);
+            this.btnOK.Location = new System.Drawing.Point(366, 66);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(64, 24);
+            this.btnOK.Size = new System.Drawing.Size(77, 26);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "&OK    ";
             this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -102,9 +102,9 @@ namespace TheDotFactory
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.button1.Location = new System.Drawing.Point(235, 61);
+            this.button1.Location = new System.Drawing.Point(282, 66);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(64, 24);
+            this.button1.Size = new System.Drawing.Size(77, 26);
             this.button1.TabIndex = 2;
             this.button1.Text = "&Cancel";
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -112,15 +112,15 @@ namespace TheDotFactory
             // 
             // txtInput
             // 
-            this.txtInput.Location = new System.Drawing.Point(15, 32);
+            this.txtInput.Location = new System.Drawing.Point(18, 34);
             this.txtInput.Name = "txtInput";
-            this.txtInput.Size = new System.Drawing.Size(371, 20);
+            this.txtInput.Size = new System.Drawing.Size(445, 21);
             this.txtInput.TabIndex = 0;
             this.txtInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtInput_KeyPress);
             // 
             // InputBoxDialog
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.AutoScaleBaseSize = new System.Drawing.Size(6, 14);
             this.ClientSize = new System.Drawing.Size(398, 93);
             this.Controls.Add(this.txtInput);
             this.Controls.Add(this.button1);
