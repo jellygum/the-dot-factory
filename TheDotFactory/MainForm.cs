@@ -35,6 +35,11 @@ namespace TheDotFactory
         public const string BitString0 = "0";
         private static String nl = Environment.NewLine;
 
+        // will hold the resutl string            
+        private static string resultStringSource = "";
+        private static string resultStringHeader = "";
+
+
         // application version
         public const string ApplicationVersion = "0.1.4";
 
@@ -1848,8 +1853,8 @@ namespace TheDotFactory
             Properties.Settings.Default.Save();
 
             // will hold the resutl string            
-            string resultStringSource = "";
-            string resultStringHeader = "";
+            resultStringSource = "";
+            resultStringHeader = "";
 
             // check which tab is active
             if (tcInput.SelectedTab.Text == "Text")
@@ -1862,10 +1867,15 @@ namespace TheDotFactory
                 // generate output bitmap
                 generateOutputForImage(ref m_currentLoadedBitmap, ref resultStringSource, ref resultStringHeader);
             }
-
+            
             // color code the strings and output
-            outputSyntaxColoredString(resultStringSource, ref txtOutputTextSource);
-            outputSyntaxColoredString(resultStringHeader, ref txtOutputTextHeader);
+            //            outputSyntaxColoredString(resultStringSource, ref txtOutputTextSource);
+            txtOutputTextSource.Language = FastColoredTextBoxNS.Language.CSharp;
+            txtOutputTextSource.Text = resultStringSource;
+
+            //outputSyntaxColoredString(resultStringHeader, ref txtOutputTextHeader);
+            txtOutputTextHeader.Language = FastColoredTextBoxNS.Language.CSharp;
+            txtOutputTextHeader.Text = resultStringHeader;
         }
 
         private void btnBitmapLoad_Click(object sender, EventArgs e)
@@ -2128,8 +2138,8 @@ namespace TheDotFactory
                 string moduleName = dlgSaveAs.FileName;
 
                 // save the text
-                txtOutputTextSource.SaveFile(String.Format("{0}.c", moduleName), RichTextBoxStreamType.PlainText);
-                txtOutputTextHeader.SaveFile(String.Format("{0}.h", moduleName), RichTextBoxStreamType.PlainText);
+//                txtOutputTextSource.SaveFile(String.Format("{0}.c", moduleName), RichTextBoxStreamType.PlainText);
+//                txtOutputTextHeader.SaveFile(String.Format("{0}.h", moduleName), RichTextBoxStreamType.PlainText);
             }
         }
     }

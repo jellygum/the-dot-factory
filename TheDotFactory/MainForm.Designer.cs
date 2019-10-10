@@ -1,4 +1,6 @@
-﻿namespace TheDotFactory
+﻿using FastColoredTextBoxNS;
+
+namespace TheDotFactory
 {
     partial class MainForm
     {
@@ -64,7 +66,8 @@
             this.pbxBitmap = new System.Windows.Forms.PictureBox();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtOutputTextSource = new System.Windows.Forms.RichTextBox();
+//            this.txtOutputTextSource = new System.Windows.Forms.RichTextBox();
+            this.txtOutputTextSource = new FastColoredTextBoxNS.FastColoredTextBox();
             this.ctxMenuSource = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmCopySource = new System.Windows.Forms.ToolStripMenuItem();
             this.label13 = new System.Windows.Forms.Label();
@@ -94,7 +97,8 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtOutputTextHeader = new System.Windows.Forms.RichTextBox();
+//            this.txtOutputTextHeader = new System.Windows.Forms.RichTextBox();
+            this.txtOutputTextHeader = new FastColoredTextBoxNS.FastColoredTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -874,7 +878,8 @@
         private System.Windows.Forms.OpenFileDialog dlgOpenFile;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.RichTextBox txtOutputTextSource;
+//        private System.Windows.Forms.RichTextBox txtOutputTextSource;
+        private FastColoredTextBox txtOutputTextSource;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnGenerate;
         private System.Windows.Forms.ComboBox cbxOutputConfiguration;
@@ -918,7 +923,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.RichTextBox txtOutputTextHeader;
+//        private System.Windows.Forms.RichTextBox txtOutputTextHeader;
+        private FastColoredTextBox txtOutputTextHeader;
         private System.Windows.Forms.Panel panel1;
 
     }
