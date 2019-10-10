@@ -39,6 +39,10 @@ namespace TheDotFactory
         private static string resultStringSource = "";
         private static string resultStringHeader = "";
 
+        //  Progressbar From
+        public ProgressForm progressForm = new ProgressForm();
+
+        private BackgroundWorker worker;
 
         // application version
         public const string ApplicationVersion = "0.1.4";
@@ -151,6 +155,14 @@ namespace TheDotFactory
             splitContainer1.SplitterDistance = 340;
             splitContainer1.Panel1MinSize = 287;
             splitContainer1.Panel2MinSize = 260;
+
+			// Background Font Generation
+            worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.ProgressChanged += new ProgressChangedEventHandler(worker_ProgressChanged);
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
         }
 
         // force a redraw on size changed
@@ -1845,6 +1857,7 @@ namespace TheDotFactory
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+#if false
             // set focus somewhere else
             label1.Focus();
             
@@ -1876,7 +1889,109 @@ namespace TheDotFactory
             //outputSyntaxColoredString(resultStringHeader, ref txtOutputTextHeader);
             txtOutputTextHeader.Language = FastColoredTextBoxNS.Language.CSharp;
             txtOutputTextHeader.Text = resultStringHeader;
+#else
+            // 비동기(Async)로 실행
+            //            string genType = new string;
+            //            genType = tcInput.SelectedTab.Text;
+            //            worker.RunWorkerAsync(argument: genType);
+            int iMode;  //  0:Text / 1:Image
+            if (tcInput.SelectedTab.Text == "Text")
+            {
+                iMode = 0;
+            }
+            else
+            {
+                iMode = 1;
+            }
+            worker.RunWorkerAsync(argument: iMode);
+#endif
         }
+
+
+        //--------------------------------------------------------------------------------------------------------
+        // Worker Thread가 실제 하는 일
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int iMode = (int)e.Argument;
+            //            progressForm.Show();
+
+            // set focus somewhere else
+            //            label1.Focus();
+            worker.ReportProgress(0);
+
+            // save default input text
+            Properties.Settings.Default.InputText = txtInputText.Text;
+            Properties.Settings.Default.Save();
+
+            //            progressForm.SetProgress(20);
+            worker.ReportProgress(20);
+
+            // will hold the resutl string            
+            resultStringSource = "";
+            resultStringHeader = "";
+
+            // check which tab is active
+//            if (genType == "Text")
+            if( iMode == 0 )
+            {
+                // generate output text
+                generateOutputForFont(fontDlgInputFont.Font, ref resultStringSource, ref resultStringHeader);
+            }
+            else
+            {
+                // generate output bitmap
+                generateOutputForImage(ref m_currentLoadedBitmap, ref resultStringSource, ref resultStringHeader);
+            }
+
+            worker.ReportProgress(60);
+            //            progressForm.SetProgress(60);
+
+            // color code the strings and output
+            //            outputSyntaxColoredString(resultStringSource, ref txtOutputTextSource);
+            txtOutputTextSource.Language = FastColoredTextBoxNS.Language.CSharp;
+            txtOutputTextSource.Text = resultStringSource;
+
+            worker.ReportProgress(80);
+            //            progressForm.SetProgress(80);
+
+            //outputSyntaxColoredString(resultStringHeader, ref txtOutputTextHeader);
+            txtOutputTextHeader.Language = FastColoredTextBoxNS.Language.CSharp;
+            txtOutputTextHeader.Text = resultStringHeader;
+
+            worker.ReportProgress(100);
+            //          progressForm.SetProgress(100);
+
+//            progressForm.Hide();
+        }
+
+        // Progress 리포트 - UI Thread
+        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if ( e.ProgressPercentage == 0 )
+            {
+                progressForm.Show();
+            }
+
+            progressForm.SetProgress(e.ProgressPercentage);
+        }
+
+        // 작업 완료 - UI Thread
+        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // 에러가 있는지 체크
+            if (e.Error != null)
+            {
+            //    lblMsg.Text = e.Error.Message;
+                MessageBox.Show(e.Error.Message, "Error");
+                return;
+            }
+            
+            //lblMsg.Text = "성공적으로 완료되었습니다";
+            progressForm.Hide();
+
+        }
+        //--------------------------------------------------------------------------------------------------------
+
 
         private void btnBitmapLoad_Click(object sender, EventArgs e)
         {
@@ -1899,6 +2014,8 @@ namespace TheDotFactory
                 txtImageName.Text = Path.GetFileNameWithoutExtension(dlgOpenFile.FileName);
             }
         }
+
+
 
         // parse the output text line
         void outputSyntaxColoredString(string outputString, ref RichTextBox outputTextBox)
