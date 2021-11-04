@@ -156,13 +156,15 @@ namespace TheDotFactory
             splitContainer1.Panel1MinSize = 287;
             splitContainer1.Panel2MinSize = 260;
 
-			// Background Font Generation
+            //===========================================================================
+            // Background Font Generation
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.ProgressChanged += new ProgressChangedEventHandler(worker_ProgressChanged);
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            //===========================================================================
         }
 
         // force a redraw on size changed
@@ -1913,25 +1915,19 @@ namespace TheDotFactory
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             int iMode = (int)e.Argument;
-            //            progressForm.Show();
 
-            // set focus somewhere else
-            //            label1.Focus();
             worker.ReportProgress(0);
 
             // save default input text
             Properties.Settings.Default.InputText = txtInputText.Text;
             Properties.Settings.Default.Save();
 
-            //            progressForm.SetProgress(20);
             worker.ReportProgress(20);
 
             // will hold the resutl string            
             resultStringSource = "";
             resultStringHeader = "";
 
-            // check which tab is active
-//            if (genType == "Text")
             if( iMode == 0 )
             {
                 // generate output text
@@ -1943,25 +1939,11 @@ namespace TheDotFactory
                 generateOutputForImage(ref m_currentLoadedBitmap, ref resultStringSource, ref resultStringHeader);
             }
 
-            worker.ReportProgress(60);
-            //            progressForm.SetProgress(60);
+            worker.ReportProgress(60);  //  => worker_ProgressChanged(60)   txtOutputTextHeader.Text = resultStringHeader;
 
-            // color code the strings and output
-            //            outputSyntaxColoredString(resultStringSource, ref txtOutputTextSource);
-            txtOutputTextSource.Language = FastColoredTextBoxNS.Language.CSharp;
-            txtOutputTextSource.Text = resultStringSource;
+            worker.ReportProgress(80);  //  => worker_ProgressChanged(80)   txtOutputTextSource.Text = resultStringSource;
 
-            worker.ReportProgress(80);
-            //            progressForm.SetProgress(80);
-
-            //outputSyntaxColoredString(resultStringHeader, ref txtOutputTextHeader);
-            txtOutputTextHeader.Language = FastColoredTextBoxNS.Language.CSharp;
-            txtOutputTextHeader.Text = resultStringHeader;
-
-            worker.ReportProgress(100);
-            //          progressForm.SetProgress(100);
-
-//            progressForm.Hide();
+            worker.ReportProgress(100); //  => worker_ProgressChanged(100)
         }
 
         // Progress 리포트 - UI Thread
@@ -1970,6 +1952,19 @@ namespace TheDotFactory
             if ( e.ProgressPercentage == 0 )
             {
                 progressForm.Show();
+            }
+
+            if (e.ProgressPercentage == 60)
+            {
+                txtOutputTextHeader.Language = FastColoredTextBoxNS.Language.CSharp;
+                txtOutputTextHeader.Text = resultStringHeader;
+
+            }
+            else if (e.ProgressPercentage == 80)
+            {
+                txtOutputTextSource.Language = FastColoredTextBoxNS.Language.CSharp;
+                txtOutputTextSource.Text = resultStringSource;
+
             }
 
             progressForm.SetProgress(e.ProgressPercentage);
@@ -1985,10 +1980,10 @@ namespace TheDotFactory
                 MessageBox.Show(e.Error.Message, "Error");
                 return;
             }
-            
-            //lblMsg.Text = "성공적으로 완료되었습니다";
-            progressForm.Hide();
 
+            //lblMsg.Text = "성공적으로 완료되었습니다";
+//            MessageBox.Show("Complete", "성공적으로 완료되었습니다");
+            progressForm.Hide();
         }
         //--------------------------------------------------------------------------------------------------------
 
